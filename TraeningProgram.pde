@@ -45,6 +45,4 @@ void keyPressed()
   if (keyCode == ' ')
   appstate = 1;
 }
-
-
   
