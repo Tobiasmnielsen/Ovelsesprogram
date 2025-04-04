@@ -1,22 +1,60 @@
-// Hej tobias mose 
-int appstate = 1;
+int appstate = 0; // MENU NAVIGATION
+int blinkInterval = 450;
+int sidsteTid = 0;
+boolean synlig = true;
+PImage logo; // Definerer billedevariabel
+int xlogo = 0;
+int ylogo = 0;
 
 void setup()
 {
   size(1420,880);
   background(255);
+  logo = loadImage ("logo.png"); // Vælger logo til tom variabel
+  
 }
 
 void draw()
 {
-  if (appstate == 1)
+  int nutid = millis();
+  int xlogo = width - logo.width;
+    if (appstate == 0) // VELKOMMEN MENU
+    {
+      background(0);
+      
+      image (logo, xlogo, ylogo);
+      textSize(40);
+      fill(255);
+      textAlign(CENTER, CENTER);
+      text ("Velkommen til ProcessingPump", width/2, 300);
+      
+      textSize(30);
+      text ("Din digitale træningsmakker", width/2, 350);
+      
+      if (nutid - sidsteTid > blinkInterval)
+      {
+        sidsteTid = nutid;
+        synlig = !synlig; // ! skifter boolean om fra true til false, og omvendt
+      }
+      
+      if (synlig)
+      {
+        int farveVelkommen = (nutid / 100) % 255; // Milli bliver til CENT %255 sikrer at der skabes et interval
+        fill (farveVelkommen, 255 - farveVelkommen, farveVelkommen * 2);
+        textSize (20);
+        text ("TRYK MELLEMRUM FOR AT FORTSÆTTE", width/2, 700);
+      }
+    }
+ 
+  if (appstate == 1) // MAIN MENU
     {
       background(255);
       textSize(30);
       fill(0);
       text ("Main menu", 100, 100);
     }
-  if (appstate == 2)
+  
+  if (appstate == 2) // OVERKROP
     {
       background(255);
       textSize(30);
@@ -24,7 +62,7 @@ void draw()
       text ("Overkrop", 100, 100);
   
     }
-if (appstate == 3)
+if (appstate == 3) // UNDERKROP
   {
     background(255);
     textSize(30);
@@ -33,7 +71,8 @@ if (appstate == 3)
   }
 }
 
-void keyPressed()
+
+void keyPressed() // NAVIGERING
 {
   if (keyCode == UP)
   {
@@ -46,4 +85,6 @@ void keyPressed()
   if (keyCode == ' ')
   appstate = 1;
 }
+
+
   
