@@ -1,10 +1,25 @@
 int appstate = 0; // MENU NAVIGATION
 int blinkInterval = 450;
 int sidsteTid = 0;
-boolean synlig = true;
+boolean synlig = false;
+
 PImage logo; // Definerer billedevariabel
+
+// Underkrop
+PImage squat1;
+PImage squat2;
+int xsquat = 0;
+int ysquat = 0;
+//boolean skabBevægelse = true;
+int skabBevægelse = 0;
+int squatFrame = 0;
+int sidsteSkiftTid = 0;
+int skiftInterval = 500;
+
+// logo
 int xlogo = 0;
 int ylogo = 0;
+
 // Main menu knap
 int mainMenuKnapX = 150;
 int mainMenuKnapY = 150;
@@ -17,12 +32,17 @@ void setup()
   size(1420,880);
   background(255);
   logo = loadImage ("logo.png"); // Vælger logo til tom variabel 
+  squat1 = loadImage ("squat1.jpg");
+  squat2 = loadImage ("squat2.jpg");
 }
 
 void draw()
 {
   int nutid = millis();
   int xlogo = width - logo.width;
+  int xsquat = width / 3 * 2;
+  int ysquat = height / 2;
+  
     if (appstate == 0) // VELKOMMEN MENU
     {
       background(0);
@@ -55,19 +75,11 @@ void draw()
  
   if (appstate == 1) // MAIN MENU
     {
-      background(255);
+      background(0);
       textSize(30);
-      fill(0);
+      fill(255);
       text ("Main menu", 100, 100);
-      
-      fill(255,0,0);
-      rect(mainMenuKnapX, mainMenuKnapY, mainMenuKnapW, mainMenuKnapB);
-      fill(0);
-      textAlign(CENTER,CENTER);
-      textSize(16);
-      text("Hovedmenu", mainMenuKnapX + mainMenuKnapW / 2, mainMenuKnapY + mainMenuKnapB / 2);   //text "hovedmenu" på knappen
-        
-  }
+    }
  
   
   
@@ -81,27 +93,42 @@ void draw()
     }
 if (appstate == 3) // UNDERKROP
   {
-    background(255);
+    background(0);
+    textSize(40);
+    fill(255);
+    text ("Underkrop", width / 2, 100);
     textSize(30);
-    fill(0);
-    text ("Underkrop", 100, 100);
+    text ("Idag skal du træne ben", width / 2, 150);
+    text ("Squat", width / 3, height / 2);
+    
+    if (skabBevægelse == 1)
+    {
+     if (millis() - sidsteSkiftTid > skiftInterval) // Denne condition beskriver hvorvidt at squatFrame 1 eller 2 skal vises, afhængig af om der er gået mere end 3 sekunder.
+     {
+       squatFrame = (squatFrame + 1) % 2;
+       sidsteSkiftTid = millis();
+     }
+     if (squatFrame == 0)
+     {
+       image(squat1, xsquat, ysquat);
+     } else
+     {
+       image(squat2, xsquat, ysquat);
+     }
+    }
   }
 }
 
 
 void keyPressed() // NAVIGERING
 {
-  if (keyCode == UP)
-  {
-  appstate = 2;
+  if (keyCode == UP)  appstate = 2;
+  if (keyCode == DOWN)  appstate = 3;
+  if (key == ' ')  appstate = 1;
+  if (key == 'n' || key == 'N') {
+    skabBevægelse = 1;
+    sidsteSkiftTid = millis();
   }
-  if (keyCode == DOWN)
-  {
-  appstate = 3;
-  }
-  if (keyCode == ' ')
-  appstate = 1;
 }
-  if (keyCode == ' ')
-  appstate = 1;
-}
+
+  
