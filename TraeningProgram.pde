@@ -1,3 +1,4 @@
+// Hej tobias mose 
 int appstate = 1;
 
 void setup()
