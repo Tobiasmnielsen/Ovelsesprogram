@@ -5,13 +5,18 @@ boolean synlig = true;
 PImage logo; // Definerer billedevariabel
 int xlogo = 0;
 int ylogo = 0;
+// Main menu knap
+int mainMenuKnapX = 150;
+int mainMenuKnapY = 150;
+int mainMenuKnapW = 100; 
+int mainMenuKnapB = 50;
+
 
 void setup()
 {
   size(1420,880);
   background(255);
-  logo = loadImage ("logo.png"); // Vælger logo til tom variabel
-  
+  logo = loadImage ("logo.png"); // Vælger logo til tom variabel 
 }
 
 void draw()
@@ -46,13 +51,23 @@ void draw()
       }
     }
  
+ 
+ 
   if (appstate == 1) // MAIN MENU
     {
       background(255);
       textSize(30);
       fill(0);
       text ("Main menu", 100, 100);
-    }
+      
+      fill(255,0,0);
+      rect(mainMenuKnapX, mainMenuKnapY, mainMenuKnapW, mainMenuKnapB);
+      textAlign(CENTER,CENTER);
+      textSize(16);
+      //text("Hovedmenu", )
+  }
+ 
+  
   
   if (appstate == 2) // OVERKROP
     {
@@ -85,6 +100,5 @@ void keyPressed() // NAVIGERING
   if (keyCode == ' ')
   appstate = 1;
 }
-
 
   
