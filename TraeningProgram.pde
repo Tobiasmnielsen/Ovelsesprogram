@@ -62,9 +62,11 @@ void draw()
       
       fill(255,0,0);
       rect(mainMenuKnapX, mainMenuKnapY, mainMenuKnapW, mainMenuKnapB);
+      fill(0);
       textAlign(CENTER,CENTER);
       textSize(16);
-      //text("Hovedmenu", )
+      text("Hovedmenu", mainMenuKnapX + mainMenuKnapW / 2, mainMenuKnapY + mainMenuKnapB / 2);   //text "hovedmenu" på knappen
+        
   }
  
   
@@ -100,5 +102,6 @@ void keyPressed() // NAVIGERING
   if (keyCode == ' ')
   appstate = 1;
 }
-
-  
+  if (keyCode == ' ')
+  appstate = 1;
+}
