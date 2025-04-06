@@ -56,9 +56,9 @@ void draw() {
   }
 
   if (appstate == 1) { // MAIN MENU
-    background(255);
+    background(0);
     textSize(30);
-    fill(0);
+    fill(255);
     text("Hovedmenu", 100, 100);
     
     fill(255, 0, 0);
@@ -77,9 +77,9 @@ void draw() {
   }
 
   if (appstate == 2) { // OVERKROP
-    background(255);
+    background(0);
     textSize(30);
-    fill(0);
+    fill(255);
     text("Overkrop", 100, 100);
     
     fill(255, 0, 0);
