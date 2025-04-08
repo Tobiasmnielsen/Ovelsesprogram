@@ -1,36 +1,42 @@
 // appstate
+// Appstate er en integer funktion som fungerer som en condition der tjekker hvilken
+// side på menuen man befinder sig på. Her er 0 = startmenu, 1 = hovedmenu, 2 = underkrop, 3 = overkrop
 int appstate = 0;
 
-//blinketekst
-int blinkInterval = 450;
-int sidsteTid = 0;
+//Blinketekst
+// De 2 første variabler deklareres for at gøre klar til et tidsdefineret interval.
+// Variablen synlig er til for at bestemme om teksten vises eller ej
+int blinkInterval = 450; 
+int sidsteTid = 0; 
 boolean synlig = true;
 
-// Skab bevægelse
+// Animationsstart
+//Disse variabler fungerer som binære conditions for start af animationen
 int skabBevægelseSquat = 0;
 int skabBevægelseArmbøj = 0;
 
-// Animation - squat
-PImage squat1, squat2;
+// Animation - squat og armbøjning (og logo)
+// Først skaber vi 5 tomme billedvariable som kan indeholde billedværdi
+PImage squat1, squat2, armbøj1, armbøj2, logo, hakketmakker;
+
+// Derefter deklarerer vi koordinatorne for animationerne
+int xanimation = 1000;
+int yanimation = 400;
+
+// Så variabler bruges definere squat animationens intervaller og placering
 int squatFrame = 0;
 int sidsteSkiftTidSquat = 0;
-int skiftIntervalSquat = 500;
 int nedtællingStartTidSquat = 0;
-int xsquat = 1000;
-int ysquat = 400;
 
-// Animation - armbøjning
-PImage armbøj1, armbøj2;
+// Disse variabler bruges til at definere armbøjnings animationens intervaller og placering
 int armbøjFrame = 0;
 int sidsteSkiftTidArmbøj = 0;
-int skiftIntervalArmbøj = 500;
 int nedtællingStartTidArmbøj = 0;
-int xarmbøj = 1000;
-int yarmbøj = 400;
 
-//Logo
-PImage logo;
+// skiftInterval definere intervallet mellem billederne i animationen
+int skiftInterval = 500;
 
+// Dernæst skaber vi et vindue og deklarerer alle vores billedevariabler med navnene på billederne
 void setup()
 {
   size(1420,880);
@@ -39,36 +45,51 @@ void setup()
   squat2 = loadImage("squat2.jpg");
   armbøj1 = loadImage("Armbøjning1.png");
   armbøj2 = loadImage("Armbøjning2.png");
+  hakketmakker = loadImage("hakketmakker.jpg");
  }
  
+// Så definerer vi en tegnefunktion som skal skabe menuen 
 void draw()
 {
-  background(0);
+  
+// Før de conditions som definerer diverse funktioner i Draw, så definerer vi en række variabler. 
+// Dette sker inde i draw funktionen, da de først deklareres i funktioner som forekommer senere i koden.
+
+// Disse variabler er tid og placeringer for tekst
   int nutid = millis();
   int midtForX = width / 2;
   int titelY = 100;
   int undertitelY = 150;
   int blinkendeY = 700;
   
+// Dernæst definerer vi baggrund og logoet som faste dele af draw funktionen.
+  background(0);
   image(logo, width - logo.width, 0);
 
-  
+// Her starter vores første condition som er en velkomstmenu.
+// Menuen genkalder brødTekst 2 gange, og visBlinkendeTekst 1 gang
   if (appstate == 0)
   {
     brødTekst("Velkommen til ProcessingPump", 40, midtForX, titelY);
     brødTekst("Din digitale træningsmakker", 30, midtForX, undertitelY);
     visBlinkendeTekst("TRYK MELLEMRUM FOR AT FORTSÆTTE", midtForX, blinkendeY, nutid);
   }
+
+// Her defineres, at hvis appstate er alt andet end på 0 (velkomstmenu), så kommer et funktionskald på menuKnap som køres 3 gange
   else
   {
   menuKnap(0, 580, 200, 100, "Hovedmenu");
   menuKnap(0, 680, 200, 100, "Underkrop");
   menuKnap(0, 780, 200, 100, "Overkrop");
   }
+  
+// Her starter vores anden condition som er hovedmenuen
   if (appstate == 1)
   {
     brødTekst("Hovedmenu", 30, midtForX, titelY);
     brødTekst("Klik på knapperne nedenfor for at vælge din øvelse!", 20, midtForX, undertitelY);
+    imageMode(CENTER);
+    image(hakketmakker, midtForX, height/2);
   }
   
   if (appstate == 2)
@@ -78,8 +99,8 @@ void draw()
     visBlinkendeTekst("TRYK MELLEMRUM FOR AT FORTSÆTTE", midtForX, blinkendeY, nutid);
     if (skabBevægelseArmbøj == 1) 
     {
-      visAnimation(true, nedtællingStartTidArmbøj, sidsteSkiftTidArmbøj, skiftIntervalArmbøj,
-               armbøjFrame, armbøj1, armbøj2, xarmbøj, yarmbøj, "armbøj", skabBevægelseArmbøj);
+      visAnimation(true, nedtællingStartTidArmbøj, sidsteSkiftTidArmbøj, skiftInterval,
+               armbøjFrame, armbøj1, armbøj2, xanimation, yanimation, "armbøj", skabBevægelseArmbøj);
     }
   }
   
@@ -91,8 +112,8 @@ void draw()
   }
   if (skabBevægelseSquat == 1) 
   {
-  visAnimation(true, nedtællingStartTidSquat, sidsteSkiftTidSquat, skiftIntervalSquat,
-               squatFrame, squat1, squat2, xsquat, ysquat, "squat", skabBevægelseSquat);
+  visAnimation(true, nedtællingStartTidSquat, sidsteSkiftTidSquat, skiftInterval,
+               squatFrame, squat1, squat2, xanimation, yanimation, "squat", skabBevægelseSquat);
   }
 }
 
